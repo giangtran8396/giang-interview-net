@@ -2,8 +2,10 @@
 
 - [C#](#-C#)
     - [1. Generic](#1-generic)
-    - [2. Delegate](#1-delegate)
-    - [3. Event](#1-event)
+    - [2. Delegate](#2-delegate)
+    - [3. Event](#3-event)
+    - [4. Exception Handling](#4-exception-handling)
+    - [5. Lambda Expressions](#5-lambda-expressions)
 
 ## 📘 C#
 
@@ -51,3 +53,37 @@
     - `Delegate` có hai tham số, tham số thứ nhất có kiểu dữ liệu là `object`, tham số thứ hai có kiểu `EventArgs`. `object` chính là đối tượng phát sinh sự kiện, `EventArgs` chính là class giữ thông tin mà đối tượng gửi kèm trong quá trình phát sinh sự kiện.
 
 [Read more](https://www.howkteam.vn/course/khoa-hoc-lap-trinh-c-nang-cao/event-chuan-net-trong-c-4042)
+
+### 4. Exception Handling
+- C# support exception handling with try catch finally
+  - `try` một khối được dùng để viết mã
+  - `catch` khi try có lỗi sẽ được catch bắt
+  - `finally` sau khi try xong khối try, catch finally sẽ được gọi, `finally luôn luôn được gọi cuối cùng cho dù catch có xảy ra hay không`
+  - `throw` được dùng để ném lỗi khi chúng ta muốn handle lỗi
+  - ```
+    try {
+
+    } catch {
+
+    }
+    finally {
+
+    }
+    ```
+ - C# hỗ trợ một số thư viện lỗi
+    - System.IndexOutOfRangeException
+    - System.ArrayTypeMismatchException
+    - System.NullReferenceException
+    - System.OutOfMemoryException
+    - System.InvalidCastException
+- Có thể custom exception bằng cách kế thừa Exception
+
+### 5. Lambda Expressions
+- Là một annonymous function được sử dụng bằng dấu `=>`
+- Dùng để tạo cây biểu thức (expression condition query)
+- Dùng lambda expression để viết code ngắn hơn với những function không cần đặt tên. hoặc dùng để trả về giá trị trong một function chỉ có dòng duy nhất là `return`
+- giúp code ngắn dễ hiểu về dễ đọc hơn
+
+- ```
+  (x, y) => x == y
+  ```
