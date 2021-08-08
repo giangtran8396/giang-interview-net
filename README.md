@@ -20,27 +20,27 @@
     - [17. C# 8,9](#17-c-89)
     - [18. When asynchonous deadlock](#18-when-asynchonous-deadlock)
     - [19. Vitural and abstract](#19-vitural-and-abstract)
-- [.NET](#net)
+- [.NET](#-net)
     - [1. IEnumerable vs ICollection vs IList vs IQueryable](#1-ienumerable-vs-icollection-vs-ilist-vs-iqueryable)
     - [2. Net Standard](#2-net-standard)
     - [3. Model Validation](#3-model-validation)
     - [4. Why using yield](#4-why-using-yield)
-    - [5. HttpApplication, Session, ViewSate and HttpContext](#HttpApplication-Session-ViewSate-and-HttpContext)
-- [.NET Core](#net-core)
+    - [5. HttpApplication, Session, ViewSate and HttpContext](#5-httpapplication-session-viewsate-and-httpcontext)
+- [.NET Core](#-net-core)
     - [1. Life cycle](#1-life-cycle)
-    - [2. Startup](#1-life-cycle)
+    - [2. Startup](#1-startup)
     - [3. LifeTime](#3-lifetime)
     - [4. Dependency](#4-dependency)
     - [5. Middleware](#5-middleware)
     - [6. Filter](#6-filter)
     - [7. Logging](#7-logging)
     - [8. Configuration](#8-configuration)
-    - [9. Error Handling](#8-error-handling)
+    - [9. Error Handling](#9-error-handling)
     - [10. Routing](#10-routing)
     - [11. Attribute](#11-Attribute)
     - [12. iHostBuilder](#12-iHostBuilder)
     - [13. .Net Core vs .Net Framework](#13-net-core-vs-net-framework)
-    - [14. ActionResult and JsonResult](#8-ActionResult-and-JsonResult)
+    - [14. ActionResult and JsonResult](#14-actionresult-and-jsonresult)
 - [Entity framework](#entity-framework)
     - [1. How many type](#1-how-many-type)
     - [2. LazyLoading, EagerLoading, Explicit Loading](#2-lazyloading-eagerloading-explicit-loading)
@@ -49,11 +49,11 @@
     - [5. SingleOrDefault vs FirstOrDefault](#5-singleordefault-vs-firstordefault)
     - [6. Store Procedure vs View vs Function vs Query](#6-store-procedure-vs-view-vs-function-vs-query)
     - [7. Trigger](#7-trigger)
-- [Web security](#web-security)
+- [Web security](#-web-security)
     - [1. OWASP10](#1-OWASP10)
-- [CI/CD](#cicd)
-- [Design Partten](#design-partten)
-    - [1. Clean Architechture](#clean-architechture)
+- [CI/CD](#-cicd)
+- [Design Partten](#-design-partten)
+    - [1. Clean Architechture](#1-clean-architechture)
     - [2. DDD](#2-ddd)
 ## 📘 C#
 
@@ -325,7 +325,7 @@ Task can have có thể thực hiện nhiều tác vụ | mỗi Thread sẽ th�
 
 ### 14. ActionResult and JsonResult
 
-## 📘 .Entity framework
+## 📘 Entity framework
 
 ### 1. How many type
 
