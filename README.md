@@ -208,7 +208,7 @@ Task can have có thể thực hiện nhiều tác vụ | mỗi Thread sẽ th�
     ```
 [Read more](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
 
-### 16. is and as keywork
+### 16. is and as keyword
 - is: sử dụng để kiểm tra kiểu dữ liệu
 - as: sử dụng để ép kiểu dữ liệu
 
