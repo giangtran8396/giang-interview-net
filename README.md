@@ -1,6 +1,6 @@
 # 📘 Table of Contents
 
-- [C#](#-C#)
+- [C#](#-c)
     - [1. Generic](#1-generic)
     - [2. Delegate](#2-delegate)
     - [3. Event](#3-event)
@@ -18,6 +18,7 @@
     - [15. Coding convention](#15-coding-convention)
     - [16. is and as keyword](#16-is-and-as-keyword)
     - [17. C# 8,9](#17-c-89)
+- [.NET Core](#-net-core)
 ## 📘 C#
 
 ### 1. Generic
@@ -215,9 +216,10 @@ Task can have có thể thực hiện nhiều tác vụ | mỗi Thread sẽ th�
 ### 17. C# 8,9
 
 [Read more](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8)
+
 [Read more](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-9)
 
-
+## 📘 .NET Core
 
 
 
