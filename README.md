@@ -15,9 +15,9 @@
     - [12. Copy and Clone](#12-copy-and-clone)
     - [13. Abstract and Interface](#13-abstract-and-interface)
     - [14. Var and Dynamic](#14-var-and-dynamic)
-    - [15. Coding convention](#15-coding-convetion)
-    - [16. is and as keywork](#16-is-and-as-keyword)
-    - [17. CSharp 8,9](#17-csharp-8-9)
+    - [15. Coding convention](#15-coding-convention)
+    - [16. is and as keyword](#16-is-and-as-keyword)
+    - [17. C# 8,9](#17-c-89)
 ## 📘 C#
 
 ### 1. Generic
