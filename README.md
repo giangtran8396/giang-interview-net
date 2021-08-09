@@ -257,8 +257,43 @@ Task can have có thể thực hiện nhiều tác vụ | mỗi Thread sẽ th�
 
 ### 18. When asynchonous deadlock
 
-### 19. Vitural and abstract
+```
+// My "library" method.
+public static async Task<JObject> GetJsonAsync(Uri uri)
+{
+  // (real-world code shouldn't use HttpClient in a using block; this is just example code)
+  using (var client = new HttpClient())
+  {
+    var jsonString = await client.GetStringAsync(uri);
+    return JObject.Parse(jsonString);
+  }
+}
 
+// My "top-level" method.
+public class MyController : ApiController
+{
+  public string Get()
+  {
+    var jsonTask = GetJsonAsync(...);
+    return jsonTask.Result.ToString();
+  }
+}
+```
+1. The top-level method calls `GetJsonAsync`
+2. `GetJsonAsync` starts the REST request by calling `HttpClient.GetStringAsync`
+3. `GetStringAsync` returns an uncompleted Task, indicating the REST request is not complete
+4. `GetJsonAsync` awaits the Task returned by `GetStringAsync`. The context is captured and will be used to continue running the `GetJsonAsync` method later. `GetJsonAsync` returns an uncompleted Task, indicating that the `GetJsonAsync` method is not complete.
+5. The top-level method synchronously blocks on the Task returned by `GetJsonAsync`. This `blocks the context thread`.
+6.  the REST request will complete. This completes the Task that was returned by `GetStringAsync`.
+7. The continuation for `GetJsonAsync` is now ready to run, and it waits for the context to be available so it can execute in the context.
+8. Deadlock. The top-level method is blocking the context thread, waiting for `GetJsonAsync` to complete, and `GetJsonAsync` is waiting for the context to be free so it can complete.
+
+
+[Read more](https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html)
+
+### 19. Vitural and abstract
+- Vitural methods `có thể implement` trước và lớp kế thừa có thể quyết định `override hoặc không` 
+- Abstract methods `không thể implement` và bắt buộc lớp kế thừa `phải override` lại phương thức đó
 ## 📘 .NET
 
 ### 1. IEnumerable vs ICollection vs IList vs IQueryable
@@ -287,20 +322,91 @@ Task can have có thể thực hiện nhiều tác vụ | mỗi Thread sẽ th�
     - Có các hàm Add,ContainsKey,Remove
 
 ### 2. Net Standard
+- .Net standard là interface để thống nhất các thư viện implementation cụ thể cần xây dựng. giúp các framework chia sẽ code với nhau
+
+- Sử .Net Standard có thể build thư viện chia sẽ với tất cả các app cho dù chúng đang chạy trên OS nào hoặc là framework nào    
 
 ### 3. Model Validation
-
+- Sử dụng DataAnotation trong các property
+    - [Required], [StringLength(100)]
+    - [StringLength(8, ErrorMessage = "Name length can't be more than 8.")]`
+- Sử dụng ModelState để kiểm tra validation
+    - ModelState.IsValid
+- Trên giao diện sử dụng asp-validation-for="Firstname"
 ### 4. Why using yield
+- Sử dụng yield khi muốn lấy những item tiếp theo mà không cần chờ list completed hoàn toàn
+- Nếu không sử dụng yield bắt buộc phải chờ cho list complite mới sử dụng được
+- A yield return không thể nằm trong try catch.
+- Không sử dụng ref out khi sử dụng yeild
+- A yield return có thể nằm trong try finally.
+- không thể yield return bên trong annonymous function
+- Sử dụng Yield giúp tiết kiệm khi tạo thêm 1 mảng tạm
+```
+  // Usually Dev use this scenario
+        private static List<int> GetListIndex1(List<int> listData, int valueFind)
+        {
+            List<int> listIdx = new List<int>();// no need create this list when using yield
+            for (int ii = 0; ii < listData.Count; ii++)
+            {
+                if (listData[ii] == valueFind)
+                    listIdx.Add(ii);
+            }
+            return listIdx;
+        }
+ 
+        // Use yield
+        private static IEnumerable<int> GetListIndex2(List<int> listData, int valueFind)
+        {
+            for (int ii = 0; ii < listData.Count; ii++)
+            {
+                if (listData[ii] == valueFind)
+                    yield return ii;
+            }
+        }
+```
+
 
 ### 5. HttpApplication, Session, ViewSate and HttpContext
-
+- Tất cả dung để lưu trử của web application.
+- HttpApplication: có tác dụng trong toàn bộ quá trình thực thi của web application.
+- Session: có tác dụng trong 1 lần ghé thăm của 1 user, và sẻ hết khi timeout.
+- ViewState: có tác dụng trên view.
+- HttpContext: có tác dụng trên 1 request, handler everything relate to request. Ex: header, cookie of request, user agent, accepted language …
 ## 📘 .NET Core
+
+- .Net core là cross platform. Tức là chạy dc trên 2 nhân Window va Linux.
+- .Net core là Open soure cự kỳ quan trọng ve license khi làm product.
+- .Net core cải thiện performance so vs .Net framework
+- .Net core phù hợp cho dự án cần scale up, thích hợp microservice.
 
 ### 1. Life cycle
 
+- Bắt đầu từ  Program (Main) -> (Start Up class -> ConfigureService() -> Configure() )
+- ConfigureService -> add DbContext, add Identity, Add Mvc, Add DI
+- Configure ->   middleware components are initialized, this area is initial Middleware. (key work: Use*Action* Middleware, Run, Map) Ex: UseExceptionHandler, UseStaticFiles, UseIdentity, UseMVC
+
 ### 2. Startup
 
+- thông thường dùng để init, loadconfig của app 
+- Startup class được chỉ định trong file Program.cs của ứng dụng khi app bắt đầu chạy
+- Có thể đưa vào contrucstor của start up các types như sau
+    - IWebHostEnvironment
+    - IHostEnvironment
+    - IConfiguration
+- có 2 method bên trong ConfigureServices, Configure
+- ConfigureServices method dùng để cấu hình các service
+    - các hàm sử dụng ConfigureServices thường có dạng IServiceCollection và tên bắt dầu bằng Add{extension}
+    - AddDbContext, AddDefaultIdentity...
+- Configure method dùng để cấu hình app, pipeline, middleware 
+    - sử dụng những extension bắt đầu bằng Use
+    - UseHttpsRedirection, UseStaticFiles,
+, UseRouting
+
 ### 3. LifeTime
+
+- AddSingleton: Một thể hiện duy nhất được tạo và chia sẻ xuyên suốt thời gian chạy của ứng dụng.
+- AddScoped: Trong cùng một request, object sẽ được chia sẽ lẫn nhau. thường sữ dụng cho DbContext
+- AddTransient: luôn luôn trả về object mới cho mỗi request
 
 ### 4. Dependency
 
@@ -319,6 +425,8 @@ Task can have có thể thực hiện nhiều tác vụ | mỗi Thread sẽ th�
 ### 11. Attribute
 
 ### 12. iHostBuilder
+- Được sử dụng trong file Programs để CreateHostBuilder
+- và sẽ sử dụng Startup để build web host
 
 ### 13. .Net Core vs .Net Framework
 
