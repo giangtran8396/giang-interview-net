@@ -510,6 +510,22 @@ public class MyController : ApiController
 ![image info](./assert/img/filter-pipeline-2.png)
 ### 7. Logging
 
+- CreateHostBuilder của IHostBuilder có hỗ trợ phương thức mở rộng ConfigureLogging. Cho phép sử dụng logger
+- Logger được config trong file appsettings.{Environment}.json
+```
+public static IHostBuilder CreateHostBuilder(string[] args) =>
+    Host.CreateDefaultBuilder(args)
+        .ConfigureLogging(logging =>
+        {
+            logging.ClearProviders();
+            logging.AddConsole();
+        })
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.UseStartup<Startup>();
+        });
+```
+
 ### 8. Configuration
 
 ### 9. Error Handling
