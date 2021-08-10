@@ -409,10 +409,91 @@ public class MyController : ApiController
 - AddTransient: luôn luôn trả về object mới cho mỗi request
 
 ### 4. Dependency
-
+- .NET Core support Dependency để thực hiện kỹ thuật IOC (Inversion Of Control)
+- Các class không giao tiếp trực tiếp với nhau mà thông qua Interfaces
+- Giảm việc phụ thuộc giữa các class
+- .NET Core hỗ trợ việc đăng ký các service và Interfaces và thêm vào IServiceCollection
+- các Service sẽ được inject vào contructor của class muốn sữ dụng thông qua Interfaces
+- IOC là nguyên lý còn DI là cách đẻ thực hiện IOC
 ### 5. Middleware
 
+- Là một thành phần trung gian cho phép xử lý request và response cho mỗi HTTP request. trước khi vào code của chúng ta
+- Middleware là phương thức mở rộng của `IApplicationBuilder`
+- Được thêm vào StartUp -> Configure
+- Gồm 3 thành phần: Use, Run, Map
+- Use
+    - Dùng để xâu chuổi nhiều middleware
+    - `Next` parameter đại diện cho một middleware tiếp theo
+    ```
+     app.Use(async (context, next) =>
+        {
+            await next();
+        });
+    ```
+- Run
+    - Thường được đặt ở cuối cùng
+    - Không có tham số `next`
+    - Nếu có một `Use` hoặc `Run` khác sau `Run` nó sẽ không chạy
+    ```
+    app.Run(async context =>
+        {
+            await context.Response.WriteAsync("Hello from 2nd delegate.");
+        });
+    ```
+- Map
+    - Được sử dụng khi muốn kiếm tra với path
+    - Nếu request start with path thì branch đó được thực hiện
+    ```
+    app.Map("/map1", HandleMapTest1);
+    ```
+- NET Core hỗ trợ người dùng viết custom middleware
+    - Phương thức Contructor phải có RequestDelegate
+    - Một phương thức tên là `Invoke` hoặc `InvokeAsync`
+        - Trả về một Task
+        - nhận vào một HttpContext
+    ```
+    public class CustomMiddleware
+    {
+        private readonly RequestDelegate _next;
+
+        public CustomMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task Invoke(HttpContext httpContext)
+        {
+            await _next(httpContext);
+        }
+    }
+    ```
+    ```
+    using Microsoft.AspNetCore.Builder;
+    namespace Custom
+    {
+        public static class RequestCustomMiddlewareExtensions
+        {
+            public static IApplicationBuilder UseRequestCustom(
+                this IApplicationBuilder builder)
+            {
+                return builder.UseMiddleware<CustomMiddleware>();
+            }
+        }
+    }
+    ```
+    ```
+    public class Startup
+    {
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseRequestCustom();
+        }
+    }
+    ```
+- Một số Middleware cơ bản
+    - `UseCors`, `UseAuthentication`, `UseRouting`, `UseStaticFiles`
 ### 6. Filter
+
 
 ### 7. Logging
 
