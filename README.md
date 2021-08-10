@@ -528,6 +528,29 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 
 ### 8. Configuration
 
+- Thường viết trong file appsetting.json
+- chứa Enviroment Variables
+- Sử dụng IConfigurationBuilder để ứng dụng đọc file appsetting.json
+- Có thể sử dụng option pattern để bind option vào Dependency Injection của service container
+
+```
+public void ConfigureServices(IServiceCollection services)
+{
+    services.Configure<PositionOptions>(Configuration.GetSection(
+                                        PositionOptions.Position));
+}
+```
+```
+private readonly PositionOptions _options;
+
+public contructor(IOptions<PositionOptions> options)
+{
+    _options = options.Value;
+}
+```
+- Không bao giờ lưu password hoặc thông tin nhạy cảm
+- Không nên lưu trữ thông tin production trong file mà nên lưu trên server, azureDevOps
+
 ### 9. Error Handling
 
 ### 10. Routing
