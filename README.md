@@ -493,8 +493,21 @@ public class MyController : ApiController
 - Một số Middleware cơ bản
     - `UseCors`, `UseAuthentication`, `UseRouting`, `UseStaticFiles`
 ### 6. Filter
-
-
+- filter hoạt động với action invocation. filter chạy sau middleware
+- Dùng để filter các action, response caching, logging
+- Sử dụng bằng Attribute ServiceFilter
+- Một số filter thông dụng
+    - OnActionExecuting // Do something before the action executes
+    - OnActionExecuted // Do something after the action executes.
+    - OnResultExecuting // before return response eg: set header
+    - OnResultExecuted // after return response eg: write log
+    - OnException // Exception Filter
+    - IAlwaysRunResultFilter, IAsyncAlwaysRunResultFilter // run for all action result
+![image info](./assert/img/filter-pipeline-1.png)
+- Filter, Middleware
+    - Nếu không cần dùng context thì sử dụng middleware
+    - Nếu cần dùng context thì sử dụng filter
+![image info](./assert/img/filter-pipeline-2.png)
 ### 7. Logging
 
 ### 8. Configuration
