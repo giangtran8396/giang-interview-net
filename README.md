@@ -517,7 +517,7 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureLogging(logging =>
         {
-            logging.ClearProviders();
+            logging.ClearProviders();//xóa tất cả logger provider trước
             logging.AddConsole();
         })
         .ConfigureWebHostDefaults(webBuilder =>
