@@ -512,6 +512,31 @@ public class MyController : ApiController
 
 - CreateHostBuilder của IHostBuilder có hỗ trợ phương thức mở rộng ConfigureLogging. Cho phép sử dụng logger
 - Logger được config trong file appsettings.{Environment}.json
+- 
+```
+{
+  "Logging": {
+    "LogLevel": { // All providers, LogLevel applies to all the enabled providers.
+      "Default": "Error", // Default logging, Error and higher.
+      "Microsoft": "Warning" // All Microsoft* categories, Warning and higher.
+    },
+    "Debug": { // Debug provider.
+      "LogLevel": {
+        "Default": "Information", // Overrides preceding LogLevel:Default setting.
+        "Microsoft.Hosting": "Trace" // Debug:Microsoft.Hosting category.
+      }
+    },
+    "EventSource": { // EventSource provider
+      "LogLevel": {
+        "Default": "Warning" // All categories of EventSource provider.
+      }
+    }
+  }
+}
+```
+- LogLevel: apply cho tất cả các providers
+- Debug: override lại loglevel
+- EventSource: override lại loglevel
 ```
 public static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
@@ -532,7 +557,8 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 - chứa Enviroment Variables
 - Sử dụng IConfigurationBuilder để ứng dụng đọc file appsetting.json
 - Có thể sử dụng option pattern để bind option vào Dependency Injection của service container
-
+- Có thể lưu key trong memory bằng cách sử dụng MemoryConfigurationProvider
+- có thể tạo appsetting cho từng môi trường dựa theo appsettings.Environment.json. appsettings.Environment.json sẽ override file appsettings.json tương ứng với từng môi trường
 ```
 public void ConfigureServices(IServiceCollection services)
 {
@@ -548,14 +574,21 @@ public contructor(IOptions<PositionOptions> options)
     _options = options.Value;
 }
 ```
+- Một option class bao gồm
+    - các field được public
+    - không có kế thừa
+    - không có contructor
 - Không bao giờ lưu password hoặc thông tin nhạy cảm
 - Không nên lưu trữ thông tin production trong file mà nên lưu trên server, azureDevOps
+- Một số configuration khác:
+    - Switch Mapping
+    - Inline file
 
 ### 9. Error Handling
 
 ### 10. Routing
 
-### 11. Attribute
+    ### 11. Attribute
 
 ### 12. iHostBuilder
 - Được sử dụng trong file Programs để CreateHostBuilder
