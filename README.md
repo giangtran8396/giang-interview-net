@@ -713,6 +713,16 @@ So sánh tốc độ Query vs Store:
 - Đánh Index: bao gồm cluster index and non cluster index
 - Merge table: gộp bản lại, chấp nhận ko đạt chuẩn, chấp nhận duplicate data
 - Ko dc join trong câu query
+- Cluster Index
+    - Một table chỉ có 1 cluster Index
+    - Mặc định khóa chính sẽ là cluster index
+    - Table sẽ sắp xếp theo cluster index
+    - Nhanh hơn NonClusterIndex
+    - Create Clustered Index [Name] ON [Table] (Column)
+- Non Cluster Index
+    - Có thể tạo nhiều NonClusterIndex
+    - Bởi vì tạo bảng map key, value nên nonCluster chậm hơn Cluster
+    - Create NonClustered Index [Name] ON [Table] (Column)
 ## 📘 Web security
 
 ### 1. OWASP10
