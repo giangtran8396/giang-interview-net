@@ -38,7 +38,7 @@
     - [9. Error Handling](#9-error-handling)
     - [10. Routing](#10-routing)
     - [11. Attribute](#11-attribute)
-    - [12. iHostBuilder](#12-ihostbuilder)
+    - [12. IHostBuilder](#12-ihostbuilder)
     - [13. .Net Core vs .Net Framework](#13-net-core-vs-net-framework)
     - [14. ActionResult and JsonResult](#14-actionresult-and-jsonresult)
 - [Entity framework](#entity-framework)
@@ -49,6 +49,7 @@
     - [5. SingleOrDefault vs FirstOrDefault](#5-singleordefault-vs-firstordefault)
     - [6. Store Procedure vs View vs Function vs Query](#6-store-procedure-vs-view-vs-function-vs-query)
     - [7. Trigger](#7-trigger)
+    - [8. Indexing](#8-indexing)
 - [Web security](#-web-security)
     - [1. OWASP10](#1-owasp10)
 - [CI/CD](#-cicd)
@@ -585,35 +586,106 @@ public contructor(IOptions<PositionOptions> options)
     - Inline file
 
 ### 9. Error Handling
+- Có nhiều cách để handle exception: 
+- Application_Error: quản lý tất cả cái exception khi sảy ra, nó đặt ở trong ở Global.asax
+- OnException ở controller 
+- HandlerError Attribute 
+    - abstract class ExceptionFilterAttribute
+- .NET Core có hỗ trợ error page `app.UseExceptionHandler("/Error");
 
 ### 10. Routing
+- ASP.NET RouteConfig.cs trong thư mục App_Start và được gọi ở Global.asax
+- ASP.NET Core được cấu hình trong Configure thông qua phương thức mở rộng
+```
+ app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name:"default",
+        pattern: "ap1/v1/{controller}"
+    );
+});
+```
+### 11. Attribute
+- Được dùng để truyền dữ liệu hoặc thông tin khai báo trong thời gian chạy Runtime với các (types, methods, class, property)
+- Attribute có thể lấy dữ liệu trong thời gian chạy thông qua kỹ thuật Reflection
+- Attribute được sữ dụng đặt trong dấu ngoặc vuông [] phía trên (type, methods, class, property)
+- Convention: các Attribute thường đặt tên với kết thúc là `Attribute` eg:  SerializableAttribute -> [Serializable]
+- Các attribute phổ biến
+    - DataAnotation
+    - HTTP Method Attribute
+    - AllowAnonymousAttribute
+    - Serializable
 
-    ### 11. Attribute
+[Read more](https://stackoverflow.com/questions/42689283/c-sharp-net-core-how-to-get-the-value-of-a-custom-attribute)
 
-### 12. iHostBuilder
+### 12. IHostBuilder
 - Được sử dụng trong file Programs để CreateHostBuilder
-- và sẽ sử dụng Startup để build web host
-
+- Sẽ sử dụng Startup để build web host
+- Sử dụng cho phần cấu hình cho ứng dụng
 ### 13. .Net Core vs .Net Framework
-
+- .Net core là cross platform. Tức là chạy dc trên 2 nhân Window va Linux.
+- .Net core là Open soure cự kỳ quan trọng ve license khi làm product.
+- .Net core cải thiện performance so vs .Net framework
+- .Net core phù hợp cho dự án cần scale up, thích hợp microservice.
 
 ### 14. ActionResult and JsonResult
-
+- ActionResult is abstract class, it includes JsonResult, JsonResult is a type in ActionResult. So we can use all for return Json format.
 ## 📘 Entity framework
-
 ### 1. How many type
+-	Database First
+    - Tạo Database -> tạo model -> map với code
+-	Code First
+    - Tạo model trên code -> migration xuống database
+-	Model Frist
+    - Tạo Schema trước thông qua EDMX file (.edmx extension)
 
 ### 2. LazyLoading, EagerLoading, Explicit Loading
+- Mặc định là Lazyloading
+- Eager loading: `load các entity trong 1 câu lệnh`. Tứ là giống như query trên DB. Thông qua phương thức Include.
+User usr = dbContext.Users.Include(a => a.UserDetails).FirstOrDefault(a => a.UserId == userId);
+- Lazy loading: load các entity khi gọi. 
+User usr = dbContext.Users.FirstOrDefault(a => a.UserId == userId);  
+UserDeatils ud = usr.UserDetails; // UserDetails are loaded here
+- Explicit lloading: Load entity một cách rõ ràng thông qua phương thức load
+    - Có 2 cách gọi là Reference and Collection
+- Sự khác nhau giữa Lazy Loading và Explicit loading
+    - Lazy Loading sẽ tự động load khi truy cập vào các property
+    ```
+    UserDeatils ud = usr.UserDetails; // UserDetails are loaded here
+    ```
+    - Explicit Loading: Bắt buộc phải gọi Collection.Load, Reference.Load.
 
 ### 3. State in Entity framework
-
+- Added -> Insert to db
+- Modified - > update in db
+- Deleted -> Delete 
+- Unchanged -> SaveChange()
+- Detached ->  
 ### 4. IEnumerable vs IQueryable
+- IEnumerable: giúp thao tác vs các collection in memory tốt hơn.
+- IQueryable: giúp build câu query và execute để trả kq từ server.
 
 ### 5. SingleOrDefault vs FirstOrDefault
+- SingleOrDefault: dung khi trong database biết chắc chắn chỉ tồn tại duy nhất 1 thằng, nếu có 2 thẳng sẻ bị lỗi
+- FirstOrDefault: dung khi trong database ko biết chắc chắn , có thể trùng, nếu có 2 thẳng sẻ lấy thằng đầu tiên trông những thằng trùng, và ko bị lổi
 
 ### 6. Store Procedure vs View vs Function vs Query
+- Store Procedure: cho phép viết câu query và đã compile sẳn lưu ở SQL, chỉ có việc gọi
+- View: Cho phép viếc câu query, mục đích chính là giới hạn số lượng col cho phép truy vấn, Vd: table user có 10 col, trong đó thì password ko dc lấy ra, thì case nay dung View để giải quết vấn đề này.
+- Function: dung để gom nhóm hoặc tính toán, có thể gọi trong Store. Mục đích dung tái sử dụng. các function có sẳn như: Count, Concat, Sum …
+So sánh tốc độ Query vs Store:
+- Lần đầu tiên tốc độ gần như going nhau, ko có qua nhiều khác biệt
+- Lần tiếp theo, Store nhanh hơn vì câu query đã dc compile sẳn chỉ cần gọi lên và sài
 
 ### 7. Trigger
+- Trigger sử dụng để kiểm soát những thay đổi của dữ liệu trong bảng.
+- Sử dụng Trigger để kiểm tra tính toàn vẹn của cơ sở dữ liệu.
+- Trigger dùng bắt validate logic ở mức cơ sở dữ liệu.
+
+### 8. Indexing
+- Đánh Index: bao gồm cluster index and non cluster index
+- Merge table: gộp bản lại, chấp nhận ko đạt chuẩn, chấp nhận duplicate data
+- Ko dc join trong câu query
 
 ## 📘 Web security
 
