@@ -586,10 +586,10 @@ public contructor(IOptions<PositionOptions> options)
     - Inline file
 
 ### 9. Error Handling
-- Có nhiều cách để handle exception: 
+- Có nhiều cách để handle exception:
 - Application_Error: quản lý tất cả cái exception khi sảy ra, nó đặt ở trong ở Global.asax
-- OnException ở controller 
-- HandlerError Attribute 
+- OnException ở controller
+- HandlerError Attribute
     - abstract class ExceptionFilterAttribute
 - .NET Core có hỗ trợ error page `app.UseExceptionHandler("/Error");
 
@@ -643,8 +643,8 @@ public contructor(IOptions<PositionOptions> options)
 - Mặc định là Lazyloading
 - Eager loading: `load các entity trong 1 câu lệnh`. Tứ là giống như query trên DB. Thông qua phương thức Include.
 User usr = dbContext.Users.Include(a => a.UserDetails).FirstOrDefault(a => a.UserId == userId);
-- Lazy loading: load các entity khi gọi. 
-User usr = dbContext.Users.FirstOrDefault(a => a.UserId == userId);  
+- Lazy loading: load các entity khi gọi.
+User usr = dbContext.Users.FirstOrDefault(a => a.UserId == userId);
 UserDeatils ud = usr.UserDetails; // UserDetails are loaded here
 - Explicit lloading: Load entity một cách rõ ràng thông qua phương thức load
     - Có 2 cách gọi là Reference and Collection
@@ -656,11 +656,38 @@ UserDeatils ud = usr.UserDetails; // UserDetails are loaded here
     - Explicit Loading: Bắt buộc phải gọi Collection.Load, Reference.Load.
 
 ### 3. State in Entity framework
-- Added -> Insert to db
-- Modified - > update in db
-- Deleted -> Delete 
-- Unchanged -> SaveChange()
-- Detached ->  
+- Added -> entities are inserted into the database and then become `Unchanged` when SaveChanges returns.
+- Modified - > entities are updated in the database and then become `Unchanged` when SaveChanges returns
+- Deleted -> entities are deleted from the database and are then `detached` from the context.
+- Unchanged -> entities are not touched by SaveChanges. Updates are not sent to the database for entities in the Unchanged state.
+- Detached -> entities are deleted from the database and are then detached from the context
+```
+using (var context = new BloggingContext())
+{
+    var blog = new Blog { Name = "ADO.NET Blog" };
+    context.Blogs.Add(blog);
+    context.SaveChanges();
+}
+
+using (var context = new BloggingContext())
+{
+    var blog = new Blog { Name = "ADO.NET Blog" };
+    context.Entry(blog).State = EntityState.Added;
+    context.SaveChanges();
+}
+```
+- Attaching -> Dùng để Attach một entity bên ngoài (mà bạn đã biết nó tồn tại trong db) vào db và gắn trạng thái cho entity đó
+```
+var existingBlog = new Blog { BlogId = 1, Name = "ADO.NET Blog" };
+using (var context = new BloggingContext())
+{
+    context.Entry(existingBlog).State = EntityState.Modified;
+
+    // Do some more work...
+
+    context.SaveChanges();
+}
+```
 ### 4. IEnumerable vs IQueryable
 - IEnumerable: giúp thao tác vs các collection in memory tốt hơn.
 - IQueryable: giúp build câu query và execute để trả kq từ server.
@@ -686,7 +713,6 @@ So sánh tốc độ Query vs Store:
 - Đánh Index: bao gồm cluster index and non cluster index
 - Merge table: gộp bản lại, chấp nhận ko đạt chuẩn, chấp nhận duplicate data
 - Ko dc join trong câu query
-
 ## 📘 Web security
 
 ### 1. OWASP10
