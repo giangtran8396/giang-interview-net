@@ -713,6 +713,9 @@ So sánh tốc độ Query vs Store:
 - Đánh Index: bao gồm cluster index and non cluster index
 - Merge table: gộp bản lại, chấp nhận ko đạt chuẩn, chấp nhận duplicate data
 - Ko dc join trong câu query
+- Nhược điểm
+    - Tăng dung lượng ổ đĩa
+    - Mỗi lần Insert Update Delete. Index sẽ phải update lại cây
 - Cluster Index
     - Một table chỉ có 1 cluster Index
     - Mặc định khóa chính sẽ là cluster index
