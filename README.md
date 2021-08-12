@@ -57,6 +57,7 @@
     - [1. Clean Architechture](#1-clean-architechture)
     - [2. DDD](#2-ddd)
     - [3. Behavior](#3-behavior)
+        - [3.1 Chain of Responsibility](#31-chain-of-responsibility)
     - [4. Creational](#4-creational)
     - [5. Structural](#5-structural)
 ## 📘 C#
@@ -357,7 +358,7 @@ public class MyController : ApiController
             }
             return listIdx;
         }
- 
+
         // Use yield
         private static IEnumerable<int> GetListIndex2(List<int> listData, int valueFind)
         {
@@ -391,7 +392,7 @@ public class MyController : ApiController
 
 ### 2. Startup
 
-- thông thường dùng để init, loadconfig của app 
+- thông thường dùng để init, loadconfig của app
 - Startup class được chỉ định trong file Program.cs của ứng dụng khi app bắt đầu chạy
 - Có thể đưa vào contrucstor của start up các types như sau
     - IWebHostEnvironment
@@ -516,7 +517,6 @@ public class MyController : ApiController
 
 - CreateHostBuilder của IHostBuilder có hỗ trợ phương thức mở rộng ConfigureLogging. Cho phép sử dụng logger
 - Logger được config trong file appsettings.{Environment}.json
-- 
 ```
 {
   "Logging": {
@@ -799,7 +799,19 @@ So sánh tốc độ Query vs Store:
 ### 2. DDD
 
 ### 3. Behavior
+#### 3.1 Chain of Responsibility
+- Vấn đề: giả sử hệ thống bạn nhận một request
+    - Bạn cần authentication
+    - Sau đó bản phải authorize
+    - Sau một thời gian bạn thêm validation
+    - Sau một thời gian bạn thêm caching
+    - Sau ...
+    - Đến một lúc nào đó hệ thống của bạn sẽ khó bảo trì và chúng phụ thuộc lẫn nhau
+- truyền một request cho nhiều đối tượng xử lý
+- Mỗi đối tượng sẽ quyết định xử lý nó hay chuyển qua cho đối tượng tiếp theo
+- Chuyển đổi các hành vi cụ thể thành các đối tượng đọc lập gọi hàm `handler`.
 
+![image info](./assert/img/Behavior/chain-of-repository.png)
 ### 4. Creational
 ### 5. Structural
 
