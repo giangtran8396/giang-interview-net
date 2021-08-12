@@ -730,7 +730,7 @@ So sánh tốc độ Query vs Store:
 - Non Cluster Index (NCI)
     - NCI lưu trữ ở một nơi và data sẽ lưu trữ ở một nơi khác
     - NCI sẽ lưu trữ cột giá trị được đánh index và địa chỉ dòng (clusterd index)
-        - Khi một câu query với column được đánh index thực hiện. 
+        - Khi một câu query với column được đánh index thực hiện.
         - DB sẽ đi vào `index` và `xem địa chỉ đã được lưu`.
         - Sau đó sẽ đi tới địa chỉ của dòng đó (clusterd index)
  và lấy dữ liệu
@@ -744,9 +744,9 @@ So sánh tốc độ Query vs Store:
         2 | Alan | Male
     - IX_tblStudent_Name Index Data
          name | Row Adress
-        --- | --- 
-        Alan | Row Address 
-        Elis | Row Address 
+        --- | ---
+        Alan | Row Address
+        Elis | Row Address
 ## 📘 Web security
 
 ### 1. OWASP10
@@ -776,7 +776,7 @@ So sánh tốc độ Query vs Store:
 ## 📘 CI/CD
 - CI
     - Create Pipeline
-        - Restore    
+        - Restore
         - Build
         - Test
         - SonarQube
@@ -802,5 +802,4 @@ So sánh tốc độ Query vs Store:
 
 ### 4. Creational
 ### 5. Structural
-
 
