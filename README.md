@@ -56,9 +56,9 @@
 - [Design Partten](#-design-partten)
     - [1. Clean Architechture](#1-clean-architechture)
     - [2. DDD](#2-ddd)
-    - [3. Singleton](#3-Singleton)
-    - [4. Builder](#4-builder)
-    - [5. Abstract Factory](#5-abstract-factory)
+    - [3. Behavior](#3-behavior)
+    - [4. Creational](#4-creational)
+    - [5. Structural](#5-structural)
 ## 📘 C#
 
 ### 1. Generic
@@ -798,11 +798,9 @@ So sánh tốc độ Query vs Store:
 - Dễ test
 ### 2. DDD
 
-### 3. Singleton
-- Tránh tạo nhiều instacnce không cần thiết
-- Một instance duy nhất chạy xuyên suốt ứng dụng
+### 3. Behavior
 
-### 4. Builder
-### 5. Abstract Factory
+### 4. Creational
+### 5. Structural
 
 
