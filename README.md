@@ -56,6 +56,9 @@
 - [Design Partten](#-design-partten)
     - [1. Clean Architechture](#1-clean-architechture)
     - [2. DDD](#2-ddd)
+    - [3. Singleton](#3-Singleton)
+    - [4. Builder](#4-builder)
+    - [5. Abstract Factory](#5-abstract-factory)
 ## 📘 C#
 
 ### 1. Generic
@@ -720,29 +723,86 @@ So sánh tốc độ Query vs Store:
     - Một table chỉ có 1 cluster Index
     - Mặc định khóa chính sẽ là cluster index
     - Table sẽ sắp xếp theo cluster index
+        - Khi một query với cluster index thực hiện
+        - Database sẽ đi tới clustered index đó và lấy dữ liệu
     - Nhanh hơn NonClusterIndex
     - Create Clustered Index [Name] ON [Table] (Column)
-- Non Cluster Index
+- Non Cluster Index (NCI)
+    - NCI lưu trữ ở một nơi và data sẽ lưu trữ ở một nơi khác
+    - NCI sẽ lưu trữ cột giá trị được đánh index và địa chỉ dòng (clusterd index)
+        - Khi một câu query với column được đánh index thực hiện. 
+        - DB sẽ đi vào `index` và `xem địa chỉ đã được lưu`.
+        - Sau đó sẽ đi tới địa chỉ của dòng đó (clusterd index)
+ và lấy dữ liệu
     - Có thể tạo nhiều NonClusterIndex
-    - Bởi vì tạo bảng map key, value nên nonCluster chậm hơn Cluster
-    - Create NonClustered Index [Name] ON [Table] (Column)
+    - Bởi nhiều hơn một bước nên nonCluster chậm hơn Cluster
+    - Create NonClustered Index IX_[Name] ON [Table] (Column)
+    - Student Table Data
+        id | name | gender
+        --- | --- | ---
+        1 | Elis | Female
+        2 | Alan | Male
+    - IX_tblStudent_Name Index Data
+         name | Row Adress
+        --- | --- 
+        Alan | Row Address 
+        Elis | Row Address 
 ## 📘 Web security
 
 ### 1. OWASP10
-
+- Injection
+    - Chèn mã độc -> SQL Injection
+- Broken Authentication
+    - Do cơ chế quản lý yêu
+    - Do đặt username với password phổ biến -> password bảo mật yếu
+    - Tài khoản admin mặc định
+- XXS
+    - Cross site scripting
+    - Chèn javascript vào web để đọc cookie
+    - Dùng Encode để giải quyết Eg: `<script> -> <script&gt.`
+- Insecure Direct Object References
+    - Không kiểm soát quyền hạn của người dùng dẫn đến việc người dùng truy cập các tài nguyên không được phép
+    - Eg: Người dùng có thể download bất kì file nào trên server
+- Sensitive data exposure (Rò rỉ dữ liệu nhạy cảm)
+    - Dữ liệu nhạy cảm không được mã hóa: Mail, thẻ tín dụng, password
+    - Sử dụng thuật toán quá cũ
+    - Sử dụng HTTPS có chứng chỉ
+- Missing function level access control (lỗi phân quyền)
+    - Có thể tấn công bằng cách sử dụng những chức năng ẩn do có quyền
+    - Cần phân quyền một cách chính xác
+- Cross Site Request Forgery (CSRF)
+    - Tấn công deputy attack
+    - Mở một tab khác từ một trang web khác giả mạo trang chính để lấy thông tin
 ## 📘 CI/CD
-
+- CI
+    - Create Pipeline
+        - Restore    
+        - Build
+        - Test
+        - SonarQube
+        - Build Artifact
+- CD
+    - Create Deploy
+        - Deploy to multiple Environment
+        - Development
+        - Staging
+        - Production
+- Azure Devops
+- Bitbutket
 ## 📘 Design Partten
 
 ### 1. Clean Architechture
-
+- Domain Entity nằm bên trong
+- Không phụ thuộc cái lớp bên ngoài
+- Không thay đổi logic nhiều
+- Dễ test
 ### 2. DDD
 
+### 3. Singleton
+- Tránh tạo nhiều instacnce không cần thiết
+- Một instance duy nhất chạy xuyên suốt ứng dụng
 
-
-
-
-
-
+### 4. Builder
+### 5. Abstract Factory
 
 
