@@ -58,6 +58,8 @@
     - [2. DDD](#2-ddd)
     - [3. Behavior](#3-behavior)
         - [3.1 Chain of Responsibility](#31-chain-of-responsibility)
+        - [3.2 Observer](#32-observer)
+        - [3.3 Strategy](#33-strategy)
     - [4. Creational](#4-creational)
     - [5. Structural](#5-structural)
 ## 📘 C#
@@ -812,6 +814,22 @@ So sánh tốc độ Query vs Store:
 - Chuyển đổi các hành vi cụ thể thành các đối tượng đọc lập gọi hàm `handler`.
 
 ![image info](./assert/img/Behavior/chain-of-repository.png)
+
+#### 3.2 Observer
+- Thường được sử dụng trong mối quan hệ 1-n giữa các object với nhau. Trong đó một đối tượng thay đổi và muốn thông báo cho tất cả các object liên quan biết về sự thay đổi đó.
+
+    ![image info](./assert/img/Behavior/obsever.png)
+
+[Read more](https://gpcoder.com/4747-huong-dan-java-design-pattern-observer/)
+
+#### 3.3 Strategy
+
+- Khi muốn có thể thay đổi các hành động được sử dụng bên trong một đối tượng tại thời điểm run-time.
+- Khi có một đoạn mã dễ thay đổi, và muốn tách chúng ra khỏi chương trình chính để dễ dàng bảo trì.
+- Tránh sự rắc rối, khi phải hiện thực một chức năng nào đó qua quá nhiều lớp con.
+
+    ![image info](./assert/img/Behavior/Strategy.png)
+
 ### 4. Creational
 ### 5. Structural
 
