@@ -61,6 +61,8 @@
         - [3.2 Observer](#32-observer)
         - [3.3 Strategy](#33-strategy)
     - [4. Creational](#4-creational)
+        - [4.1 AbstractFactory](#41-abstractfactory)
+        - [4.2 Factory](#42-factory)
     - [5. Structural](#5-structural)
 ## 📘 C#
 
@@ -331,7 +333,7 @@ public class MyController : ApiController
 ### 2. Net Standard
 - .Net standard là interface để thống nhất các thư viện implementation cụ thể cần xây dựng. giúp các framework chia sẽ code với nhau
 
-- Sử .Net Standard có thể build thư viện chia sẽ với tất cả các app cho dù chúng đang chạy trên OS nào hoặc là framework nào    
+- Sử .Net Standard có thể build thư viện chia sẽ với tất cả các app cho dù chúng đang chạy trên OS nào hoặc là framework nào
 
 ### 3. Model Validation
 - Sử dụng DataAnotation trong các property
@@ -404,7 +406,7 @@ public class MyController : ApiController
 - ConfigureServices method dùng để cấu hình các service
     - các hàm sử dụng ConfigureServices thường có dạng IServiceCollection và tên bắt dầu bằng Add{extension}
     - AddDbContext, AddDefaultIdentity...
-- Configure method dùng để cấu hình app, pipeline, middleware 
+- Configure method dùng để cấu hình app, pipeline, middleware
     - sử dụng những extension bắt đầu bằng Use
     - UseHttpsRedirection, UseStaticFiles,
 , UseRouting
@@ -831,5 +833,20 @@ So sánh tốc độ Query vs Store:
     ![image info](./assert/img/Behavior/Strategy.png)
 
 ### 4. Creational
+
+#### 4.1 AbstractFactory
+- Tạo một factory mà factory đó có thể tạo ra các factory khác
+- Các factory nhỏ sẽ tạo các đối tượng khác nhau
+- Khi người dùng (client) mong đợi nhiều cách khác nhau cho đối tượng được xây dựng.
+    ![image info](./assert/img/Creational/abstractfactory.png)
+
+[Read more](https://refactoring.guru/design-patterns/abstract-factory)
+
+#### 4.2 Factory
+- Tạo một factory để tạo những đối tượng khác mà không để lộ logic
+
+   ![image info](./assert/img/Creational/factorymethod.png)
+
+[Read more](https://refactoring.guru/design-patterns/factory-method)
 ### 5. Structural
 
