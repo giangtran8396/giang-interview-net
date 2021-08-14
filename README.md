@@ -63,7 +63,11 @@
     - [4. Creational](#4-creational)
         - [4.1 AbstractFactory](#41-abstractfactory)
         - [4.2 Factory](#42-factory)
+        - [4.3 Builder](#43-builder)
     - [5. Structural](#5-structural)
+        - [5.1 Bridge](#51-bridge)
+        - [5.2 Composite](#52-composite)
+        - [5.3 Decorator](#53-decorator)
 ## 📘 C#
 
 ### 1. Generic
@@ -848,5 +852,53 @@ So sánh tốc độ Query vs Store:
    ![image info](./assert/img/Creational/factorymethod.png)
 
 [Read more](https://refactoring.guru/design-patterns/factory-method)
+
+#### 4.3 Builder
+- khi một constructor có quá nhiều tham số truyền vào và một trong số đó optional
+- Phải tạo rất nhiều contructor và khó khăn trong việc xác định tham số truyền vào
+    ```
+    class Pizza {
+        Pizza(int size) { ... }
+        Pizza(int size, boolean cheese) { ... }
+        Pizza(int size, boolean cheese, boolean pepperoni) { ... }
+        // ...
+    ```
+   ![image info](./assert/img/Creational/builder.png)
+
+[Read more](https://refactoring.guru/design-patterns/builder)
 ### 5. Structural
 
+#### 5.1 Bridge
+- Tách phần trừu tượng ra khỏi phần implement chuyển nó thành quan hệ chứa trong (object composition)
+- Giảm sự phục thuộc giữa abstraction và implementation (loose coupling)
+- Giảm số lượng những lớp con không cần thiết
+- Dễ bảo trì dễ mở rộng
+- ban đầu chúng ta thiết kế một class với rất nhiều xử lý, bây giờ chúng ta không muốn để những xử lý đó trong class đó nữa. Vì thế, chúng ta sẽ tạo ra một class khác và move các xử lý đó qua class mới. Khi đó, trong lớp cũ sẽ giữ một đối tượng thuộc về lớp mới, và đối tượng này sẽ chịu trách nhiệm xử lý thay cho lớp ban đầu.
+
+   ![image info](./assert/img/Structural/bridge-problem.png)
+
+   ![image info](./assert/img/Structural/bridge-solutions.png)
+
+#### 5.2 Composite
+
+- Composite Pattern được sử dụng khi chúng ta cần xử lý một `nhóm đối tượng` tương tự theo cách xử lý 1 `object`.
+- Composite Pattern có thể được sử dụng để tạo ra một cấu trúc giống như cấu trúc cây.
+
+    ![image info](./assert/img/Structural/Composite.png)
+
+    ![image info](./assert/img/Structural/composite-diagram.png)
+
+#### 5.3 Decorator
+
+- Cho phép người dùng thêm chức năng mới vào đối tượng hiện tại mà không muốn ảnh hưởng đến các đối tượng khác.
+- Kiểu thiết kế này có cấu trúc hoạt động như một lớp bao bọc (wrap) cho lớp hiện có.
+- Mỗi khi cần thêm tính năng mới, đối tượng hiện có được wrap trong một đối tượng mới (decorator class).
+
+   ![image info](./assert/img/Structural/decorator.png)
+
+#### 5.4 Facade
+
+- tạo ra một giao diện đơn giản cho người sử dụng một hệ thống phức tạp.
+- client sẽ chỉ thấy những chức năng đơn giản.
+
+   ![image info](./assert/img/Structural/facade.png)
