@@ -84,7 +84,7 @@
     ```
 ### 2. Delegate
 - `Delegate` là một `biến kiểu tham chiếu`(references) chứa tham chiếu tới một phương thức.
-- Phương thức nhận vào phải có `cùng tham` số và `kiểu trả về`
+- Phương thức nhận vào phải có `cùng tham số` và `kiểu trả về`
 - `Delegate` thường được dùng để triển khai các phương thức hoặc sự kiện call-back
 - `Delegate` có thể thay đổi runtime
 - cú pháp
@@ -387,11 +387,6 @@ public class MyController : ApiController
 - HttpContext: có tác dụng trên 1 request, handler everything relate to request. Ex: header, cookie of request, user agent, accepted language …
 ## 📘 .NET Core
 
-- .Net core là cross platform. Tức là chạy dc trên 2 nhân Window va Linux.
-- .Net core là Open soure cự kỳ quan trọng ve license khi làm product.
-- .Net core cải thiện performance so vs .Net framework
-- .Net core phù hợp cho dự án cần scale up, thích hợp microservice.
-
 ### 1. Life cycle
 
 - Bắt đầu từ  Program (Main) -> (Start Up class -> ConfigureService() -> Configure() )
@@ -566,11 +561,11 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 ### 8. Configuration
 
 - Thường viết trong file appsetting.json
-- chứa Enviroment Variables
+- Chứa Enviroment Variables
 - Sử dụng IConfigurationBuilder để ứng dụng đọc file appsetting.json
 - Có thể sử dụng option pattern để bind option vào Dependency Injection của service container
 - Có thể lưu key trong memory bằng cách sử dụng MemoryConfigurationProvider
-- có thể tạo appsetting cho từng môi trường dựa theo appsettings.Environment.json. appsettings.Environment.json sẽ override file appsettings.json tương ứng với từng môi trường
+- Có thể tạo appsetting cho từng môi trường dựa theo appsettings.Environment.json. appsettings.Environment.json sẽ override file appsettings.json tương ứng với từng môi trường
 ```
 public void ConfigureServices(IServiceCollection services)
 {
@@ -824,7 +819,7 @@ So sánh tốc độ Query vs Store:
 #### 3.2 Observer
 - Thường được sử dụng trong mối quan hệ 1-n giữa các object với nhau. Trong đó một đối tượng thay đổi và muốn thông báo cho tất cả các object liên quan biết về sự thay đổi đó.
 
-    ![image info](./assert/img/Behavior/obsever.png)
+    ![image info](./assert/img/Behavior/Obsever.png)
 
 [Read more](https://gpcoder.com/4747-huong-dan-java-design-pattern-observer/)
 
