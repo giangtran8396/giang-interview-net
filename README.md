@@ -513,8 +513,9 @@ public class MyController : ApiController
     - IAlwaysRunResultFilter, IAsyncAlwaysRunResultFilter // run for all action result
 ![image info](./assert/img/filter-pipeline-1.png)
 - Filter, Middleware
-    - Nếu không cần dùng context thì sử dụng middleware
-    - Nếu cần dùng context thì sử dụng filter
+    - Sử dụng Middleware khi cần dùng HttpContext
+    - Nếu không cần dùng MVC context thì sử dụng middleware
+    - Nếu cần dùng MVC context thì sử dụng filter
 ![image info](./assert/img/filter-pipeline-2.png)
 ### 7. Logging
 
