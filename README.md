@@ -512,6 +512,7 @@ public class MyController : ApiController
     - IAlwaysRunResultFilter, IAsyncAlwaysRunResultFilter // run for all action result
 ![image info](./assert/img/filter-pipeline-1.png)
 - Filter, Middleware
+    - Filter có thể truy cập dữ liệu trong MVC context như model binding hoặc routing.
     - Nếu không cần dùng context thì sử dụng middleware
     - Nếu cần dùng context thì sử dụng filter
 ![image info](./assert/img/filter-pipeline-2.png)
