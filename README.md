@@ -61,7 +61,13 @@
         - [3.2 Observer](#32-observer)
         - [3.3 Strategy](#33-strategy)
     - [4. Creational](#4-creational)
+        - [4.1 AbstractFactory](#41-abstractfactory)
+        - [4.2 Factory](#42-factory)
+        - [4.3 Builder](#43-builder)
     - [5. Structural](#5-structural)
+        - [5.1 Bridge](#51-bridge)
+        - [5.2 Composite](#52-composite)
+        - [5.3 Decorator](#53-decorator)
 ## 📘 C#
 
 ### 1. Generic
@@ -78,7 +84,7 @@
     ```
 ### 2. Delegate
 - `Delegate` là một `biến kiểu tham chiếu`(references) chứa tham chiếu tới một phương thức.
-- Phương thức nhận vào phải có `cùng tham` số và `kiểu trả về`
+- Phương thức nhận vào phải có `cùng tham số` và `kiểu trả về`
 - `Delegate` thường được dùng để triển khai các phương thức hoặc sự kiện call-back
 - `Delegate` có thể thay đổi runtime
 - cú pháp
@@ -331,7 +337,7 @@ public class MyController : ApiController
 ### 2. Net Standard
 - .Net standard là interface để thống nhất các thư viện implementation cụ thể cần xây dựng. giúp các framework chia sẽ code với nhau
 
-- Sử .Net Standard có thể build thư viện chia sẽ với tất cả các app cho dù chúng đang chạy trên OS nào hoặc là framework nào    
+- Sử .Net Standard có thể build thư viện chia sẽ với tất cả các app cho dù chúng đang chạy trên OS nào hoặc là framework nào
 
 ### 3. Model Validation
 - Sử dụng DataAnotation trong các property
@@ -381,11 +387,6 @@ public class MyController : ApiController
 - HttpContext: có tác dụng trên 1 request, handler everything relate to request. Ex: header, cookie of request, user agent, accepted language …
 ## 📘 .NET Core
 
-- .Net core là cross platform. Tức là chạy dc trên 2 nhân Window va Linux.
-- .Net core là Open soure cự kỳ quan trọng ve license khi làm product.
-- .Net core cải thiện performance so vs .Net framework
-- .Net core phù hợp cho dự án cần scale up, thích hợp microservice.
-
 ### 1. Life cycle
 
 - Bắt đầu từ  Program (Main) -> (Start Up class -> ConfigureService() -> Configure() )
@@ -404,7 +405,7 @@ public class MyController : ApiController
 - ConfigureServices method dùng để cấu hình các service
     - các hàm sử dụng ConfigureServices thường có dạng IServiceCollection và tên bắt dầu bằng Add{extension}
     - AddDbContext, AddDefaultIdentity...
-- Configure method dùng để cấu hình app, pipeline, middleware 
+- Configure method dùng để cấu hình app, pipeline, middleware
     - sử dụng những extension bắt đầu bằng Use
     - UseHttpsRedirection, UseStaticFiles,
 , UseRouting
@@ -513,8 +514,10 @@ public class MyController : ApiController
 ![image info](./assert/img/filter-pipeline-1.png)
 - Filter, Middleware
     - Filter có thể truy cập dữ liệu trong MVC context như model binding hoặc routing.
-    - Nếu không cần dùng context thì sử dụng middleware
-    - Nếu cần dùng context thì sử dụng filter
+    - Nếu cần dùng mvc context thì sử dụng filter
+    - Nếu không cần dùng MVC context thì sử dụng middleware
+    - Sử dụng Middleware khi cần dùng HttpContext
+    - Nếu cần dùng MVC context thì sử dụng filter
 ![image info](./assert/img/filter-pipeline-2.png)
 ### 7. Logging
 
@@ -561,11 +564,11 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 ### 8. Configuration
 
 - Thường viết trong file appsetting.json
-- chứa Enviroment Variables
+- Chứa Enviroment Variables
 - Sử dụng IConfigurationBuilder để ứng dụng đọc file appsetting.json
 - Có thể sử dụng option pattern để bind option vào Dependency Injection của service container
 - Có thể lưu key trong memory bằng cách sử dụng MemoryConfigurationProvider
-- có thể tạo appsetting cho từng môi trường dựa theo appsettings.Environment.json. appsettings.Environment.json sẽ override file appsettings.json tương ứng với từng môi trường
+- Có thể tạo appsetting cho từng môi trường dựa theo appsettings.Environment.json. appsettings.Environment.json sẽ override file appsettings.json tương ứng với từng môi trường
 ```
 public void ConfigureServices(IServiceCollection services)
 {
@@ -819,7 +822,7 @@ So sánh tốc độ Query vs Store:
 #### 3.2 Observer
 - Thường được sử dụng trong mối quan hệ 1-n giữa các object với nhau. Trong đó một đối tượng thay đổi và muốn thông báo cho tất cả các object liên quan biết về sự thay đổi đó.
 
-    ![image info](./assert/img/Behavior/obsever.png)
+    ![image info](./assert/img/Behavior/Obsever.png)
 
 [Read more](https://gpcoder.com/4747-huong-dan-java-design-pattern-observer/)
 
@@ -832,5 +835,68 @@ So sánh tốc độ Query vs Store:
     ![image info](./assert/img/Behavior/Strategy.png)
 
 ### 4. Creational
+
+#### 4.1 AbstractFactory
+- Tạo một factory mà factory đó có thể tạo ra các factory khác
+- Các factory nhỏ sẽ tạo các đối tượng khác nhau
+- Khi người dùng (client) mong đợi nhiều cách khác nhau cho đối tượng được xây dựng.
+    ![image info](./assert/img/Creational/abstractfactory.png)
+
+[Read more](https://refactoring.guru/design-patterns/abstract-factory)
+
+#### 4.2 Factory
+- Tạo một factory để tạo những đối tượng khác mà không để lộ logic
+
+   ![image info](./assert/img/Creational/factorymethod.png)
+
+[Read more](https://refactoring.guru/design-patterns/factory-method)
+
+#### 4.3 Builder
+- khi một constructor có quá nhiều tham số truyền vào và một trong số đó optional
+- Phải tạo rất nhiều contructor và khó khăn trong việc xác định tham số truyền vào
+    ```
+    class Pizza {
+        Pizza(int size) { ... }
+        Pizza(int size, boolean cheese) { ... }
+        Pizza(int size, boolean cheese, boolean pepperoni) { ... }
+        // ...
+    ```
+   ![image info](./assert/img/Creational/builder.png)
+
+[Read more](https://refactoring.guru/design-patterns/builder)
 ### 5. Structural
 
+#### 5.1 Bridge
+- Tách phần trừu tượng ra khỏi phần implement chuyển nó thành quan hệ chứa trong (object composition)
+- Giảm sự phục thuộc giữa abstraction và implementation (loose coupling)
+- Giảm số lượng những lớp con không cần thiết
+- Dễ bảo trì dễ mở rộng
+- ban đầu chúng ta thiết kế một class với rất nhiều xử lý, bây giờ chúng ta không muốn để những xử lý đó trong class đó nữa. Vì thế, chúng ta sẽ tạo ra một class khác và move các xử lý đó qua class mới. Khi đó, trong lớp cũ sẽ giữ một đối tượng thuộc về lớp mới, và đối tượng này sẽ chịu trách nhiệm xử lý thay cho lớp ban đầu.
+
+   ![image info](./assert/img/Structural/bridge-problem.png)
+
+   ![image info](./assert/img/Structural/bridge-solutions.png)
+
+#### 5.2 Composite
+
+- Composite Pattern được sử dụng khi chúng ta cần xử lý một `nhóm đối tượng` tương tự theo cách xử lý 1 `object`.
+- Composite Pattern có thể được sử dụng để tạo ra một cấu trúc giống như cấu trúc cây.
+
+    ![image info](./assert/img/Structural/Composite.png)
+
+    ![image info](./assert/img/Structural/composite-diagram.png)
+
+#### 5.3 Decorator
+
+- Cho phép người dùng thêm chức năng mới vào đối tượng hiện tại mà không muốn ảnh hưởng đến các đối tượng khác.
+- Kiểu thiết kế này có cấu trúc hoạt động như một lớp bao bọc (wrap) cho lớp hiện có.
+- Mỗi khi cần thêm tính năng mới, đối tượng hiện có được wrap trong một đối tượng mới (decorator class).
+
+   ![image info](./assert/img/Structural/decorator.png)
+
+#### 5.4 Facade
+
+- tạo ra một giao diện đơn giản cho người sử dụng một hệ thống phức tạp.
+- client sẽ chỉ thấy những chức năng đơn giản.
+
+   ![image info](./assert/img/Structural/facade.png)
